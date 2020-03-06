@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,9 +15,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val integrator = IntentIntegrator(this)
-        integrator.setOrientationLocked(true)
-        integrator.initiateScan()
+        qrButton.setOnClickListener {
+            val integrator = IntentIntegrator(this)
+            integrator.setOrientationLocked(true)
+            integrator.initiateScan()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -29,8 +32,8 @@ class MainActivity : AppCompatActivity() {
                 result.let {
                     val intent = Intent(this, WebViewActivity::class.java)
                     intent.putExtra("lottoWinUrl", result.contents)
-                    startActivity(intent) }
-
+                    startActivity(intent)
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
